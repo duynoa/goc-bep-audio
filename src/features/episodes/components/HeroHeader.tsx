@@ -1,4 +1,4 @@
-import { BellPlus, ExternalLink } from 'lucide-react';
+import { BellPlus, ExternalLink, Play } from 'lucide-react';
 import {
   BRAND_EMBLEM_URL,
   getChannelWebUrl,
@@ -8,11 +8,13 @@ import {
 interface HeroHeaderProps {
   channelId: string;
   channelTitle: string;
+  onPlayLatest?: () => void;
 }
 
 export function HeroHeader({
   channelId,
   channelTitle,
+  onPlayLatest,
 }: HeroHeaderProps) {
   const subscribeHref = getChannelWebUrl(channelId);
   const displayName =
@@ -26,10 +28,10 @@ export function HeroHeader({
   };
 
   return (
-    <header className="border-b border-[#2C2824] bg-[#121110]">
+    <header className="border-b border-[#2C2824] bg-gradient-to-b from-[#1A1714] to-[#121110]">
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-5 sm:px-6 md:flex-row md:items-center md:justify-between md:py-6 lg:px-8">
         <div className="flex items-center gap-3.5 sm:gap-4">
-          <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full border border-[#2C2824] bg-[#1C1A18] sm:h-14 sm:w-14">
+          <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full border border-[#D97706]/30 bg-[#1C1A18] shadow-md shadow-black/40 sm:h-14 sm:w-14">
             <img
               src={BRAND_EMBLEM_URL}
               alt="Biểu tượng Góc Bếp Audio"
@@ -47,7 +49,18 @@ export function HeroHeader({
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+          {onPlayLatest && (
+            <button
+              type="button"
+              onClick={onPlayLatest}
+              className="inline-flex min-h-[44px] flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl border border-[#2C2824] bg-[#1C1A18] px-4 py-2.5 text-sm font-medium text-[#F3EFEA] transition-colors duration-150 hover:border-[#D97706]/60 hover:bg-[#25221F] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D97706] sm:flex-initial"
+            >
+              <Play className="h-4 w-4 shrink-0 text-[#D97706]" aria-hidden="true" />
+              <span>Nghe tập mới nhất</span>
+            </button>
+          )}
+
           <a
             href={subscribeHref}
             onClick={handleSubscribeClick}

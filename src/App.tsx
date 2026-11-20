@@ -57,12 +57,20 @@ export default function App() {
   const resolvedChannelId = feed?.channelId || '';
   const resolvedChannelTitle = feed?.channelTitle || 'Góc Bếp Audio';
   const episodes = feed?.episodes || [];
+  const activeIndex = activeEpisode
+    ? episodes.findIndex((ep) => ep.id === activeEpisode.id)
+    : -1;
 
   return (
     <div className="flex min-h-dvh flex-col bg-[#121110] text-[#F3EFEA]">
       <HeroHeader
         channelId={resolvedChannelId}
         channelTitle={resolvedChannelTitle}
+        onPlayLatest={
+          !activeEpisode && episodes.length > 0
+            ? () => handleSelectEpisode(episodes[0])
+            : undefined
+        }
       />
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-5 sm:px-6 sm:py-7 lg:px-8">
@@ -74,16 +82,26 @@ export default function App() {
           {activeEpisode && (
             <div
               ref={playerAnchorRef}
-              className="scroll-mt-4 lg:sticky lg:top-6 lg:col-span-6"
+              className="scroll-mt-4 lg:sticky lg:top-6 lg:col-span-7"
             >
               <EpisodePlayer
                 episode={activeEpisode}
                 onClose={() => setActiveEpisode(null)}
+                onPrev={
+                  activeIndex > 0
+                    ? () => handleSelectEpisode(episodes[activeIndex - 1])
+                    : undefined
+                }
+                onNext={
+                  activeIndex >= 0 && activeIndex < episodes.length - 1
+                    ? () => handleSelectEpisode(episodes[activeIndex + 1])
+                    : undefined
+                }
               />
             </div>
           )}
 
-          <div className={activeEpisode ? 'lg:col-span-6' : ''}>
+          <div className={activeEpisode ? 'lg:col-span-5' : ''}>
             <EpisodeListSection
               episodes={episodes}
               searchQuery={searchQuery}

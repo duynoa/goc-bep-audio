@@ -7,6 +7,7 @@ interface EpisodeCardProps {
   episode: Episode;
   index: number;
   isActive: boolean;
+  isLatest?: boolean;
   onSelect: (episode: Episode) => void;
 }
 
@@ -14,6 +15,7 @@ export function EpisodeCard({
   episode,
   index,
   isActive,
+  isLatest = false,
   onSelect,
 }: EpisodeCardProps) {
   const fallbackSrc = FALLBACK_COVER_IMAGES[index % FALLBACK_COVER_IMAGES.length];
@@ -31,7 +33,7 @@ export function EpisodeCard({
       }`}
     >
       {/* Thumbnail bên trái */}
-      <div className="relative aspect-video w-32 shrink-0 overflow-hidden rounded-xl border border-[#2C2824] bg-[#121110] sm:w-40">
+      <div className="relative aspect-video w-28 shrink-0 overflow-hidden rounded-xl border border-[#2C2824] bg-[#121110] sm:w-36">
         <img
           src={imgSrc}
           alt={episode.cleanTitle}
@@ -74,13 +76,17 @@ export function EpisodeCard({
           {episode.cleanTitle}
         </h3>
 
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-[#A8A095] tabular-nums">
-          {isActive && (
-            <>
-              <span className="font-semibold text-[#D97706]">Đang phát</span>
-              <span aria-hidden="true">·</span>
-            </>
-          )}
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[#A8A095] tabular-nums">
+          {isActive ? (
+            <span className="inline-flex items-center gap-1 rounded-full bg-[#D97706]/15 px-2 py-0.5 text-[11px] font-semibold text-[#F59E0B]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" aria-hidden="true" />
+              Đang phát
+            </span>
+          ) : isLatest ? (
+            <span className="rounded-full border border-[#D97706]/30 bg-[#D97706]/10 px-2 py-0.5 text-[11px] font-medium text-[#D97706]">
+              Mới nhất
+            </span>
+          ) : null}
           {episode.episodeNumber && (
             <>
               <span>Tập {episode.episodeNumber}</span>

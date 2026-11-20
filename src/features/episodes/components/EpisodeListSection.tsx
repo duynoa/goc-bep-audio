@@ -80,13 +80,13 @@ export function EpisodeListSection({
       />
 
       {isLoading ? (
-        <div className="space-y-3" aria-busy="true" aria-label="Đang tải tập truyện">
+        <div className="space-y-3 animate-pulse" aria-busy="true" aria-label="Đang tải tập truyện">
           {[0, 1, 2, 3].map((idx) => (
             <div
               key={idx}
-              className="flex min-h-[88px] items-center gap-4 rounded-2xl border border-[#2C2824] bg-[#1C1A18] p-3.5"
+              className="flex min-h-[88px] items-center gap-3.5 rounded-2xl border border-[#2C2824] bg-[#1C1A18] p-3 sm:gap-4 sm:p-3.5"
             >
-              <div className="aspect-video w-32 shrink-0 rounded-xl bg-[#25221F] sm:w-40" />
+              <div className="aspect-video w-28 shrink-0 rounded-xl bg-[#25221F] sm:w-36" />
               <div className="flex-1 space-y-2.5">
                 <div className="h-4 w-4/5 rounded bg-[#25221F]" />
                 <div className="h-3 w-1/3 rounded bg-[#25221F]" />
@@ -133,6 +133,7 @@ export function EpisodeListSection({
               episode={episode}
               index={index}
               isActive={activeEpisodeId === episode.id}
+              isLatest={index === 0 && !searchQuery.trim()}
               onSelect={onSelectEpisode}
             />
           ))}

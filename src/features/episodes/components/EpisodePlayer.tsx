@@ -1,4 +1,4 @@
-import { ExternalLink, Headphones, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ExternalLink, Headphones, X } from 'lucide-react';
 import {
   FALLBACK_COVER_IMAGES,
   getEmbedUrl,
@@ -10,11 +10,15 @@ import type { Episode } from '../types';
 interface EpisodePlayerProps {
   episode: Episode;
   onClose: () => void;
+  onPrev?: () => void;
+  onNext?: () => void;
 }
 
 export function EpisodePlayer({
   episode,
   onClose,
+  onPrev,
+  onNext,
 }: EpisodePlayerProps) {
   const isSample = Boolean(episode.isSample);
   const embedSrc = isSample ? '' : getEmbedUrl(episode.videoId, true);
@@ -31,33 +35,28 @@ export function EpisodePlayer({
   return (
     <section
       aria-label="Trình phát truyện audio"
-      className="rounded-3xl border border-[#2C2824] bg-[#1C1A18] p-4 sm:p-5"
+      className="rounded-3xl border border-[#2C2824] bg-[#1C1A18] p-4 shadow-2xl shadow-black/50 sm:p-5"
     >
-      <div className="mb-3 flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-2 text-xs text-[#A8A095] tabular-nums">
-            <span className="font-medium text-[#D97706]">Đang chọn nghe</span>
-            {episode.episodeNumber && (
-              <>
-                <span aria-hidden="true">·</span>
-                <span>Tập {episode.episodeNumber}</span>
-              </>
-            )}
-            <span aria-hidden="true">·</span>
-            <span>{episode.formattedDate}</span>
-          </div>
-          <h2 className="mt-1 font-serif text-lg font-semibold leading-snug text-[#F3EFEA] sm:text-xl">
-            {episode.cleanTitle}
-          </h2>
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <div className="flex min-w-0 flex-wrap items-center gap-2 text-xs text-[#A8A095] tabular-nums">
+          <span className="font-medium text-[#D97706]">Đang chọn nghe</span>
+          {episode.episodeNumber && (
+            <>
+              <span aria-hidden="true">·</span>
+              <span>Tập {episode.episodeNumber}</span>
+            </>
+          )}
+          <span aria-hidden="true">·</span>
+          <span>{episode.formattedDate}</span>
         </div>
 
         <button
           type="button"
           onClick={onClose}
           aria-label="Thu gọn trình phát"
-          className="flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-xl border border-[#2C2824] bg-[#121110] text-[#A8A095] transition-colors duration-150 hover:text-[#F3EFEA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D97706]"
+          className="flex min-h-[40px] min-w-[40px] shrink-0 items-center justify-center rounded-xl border border-[#2C2824] bg-[#121110] text-[#A8A095] transition-colors duration-150 hover:text-[#F3EFEA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D97706]"
         >
-          <X className="h-5 w-5" aria-hidden="true" />
+          <X className="h-4 w-4" aria-hidden="true" />
         </button>
       </div>
 
@@ -93,8 +92,38 @@ export function EpisodePlayer({
         )}
       </div>
 
-      {/* Nút bắt buộc ngay dưới trình phát: Mở bằng ứng dụng YouTube */}
-      <div className="mt-4 space-y-2.5">
+      <h2
+        title={episode.cleanTitle}
+        className="mt-3.5 line-clamp-2 font-serif text-base font-semibold leading-snug text-[#F3EFEA] sm:text-lg"
+      >
+        {episode.cleanTitle}
+      </h2>
+
+      {/* Điều hướng tập & mở bằng app YouTube */}
+      <div className="mt-4 space-y-3">
+        {(onPrev || onNext) && (
+          <div className="grid grid-cols-2 gap-2.5">
+            <button
+              type="button"
+              onClick={onPrev}
+              disabled={!onPrev}
+              className="flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl border border-[#2C2824] bg-[#121110] px-3 py-2 text-xs font-medium text-[#F3EFEA] transition-colors hover:border-[#D97706]/50 disabled:cursor-not-allowed disabled:opacity-40 sm:text-sm"
+            >
+              <ChevronLeft className="h-4 w-4 shrink-0" aria-hidden="true" />
+              <span>Tập mới hơn</span>
+            </button>
+            <button
+              type="button"
+              onClick={onNext}
+              disabled={!onNext}
+              className="flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl border border-[#2C2824] bg-[#121110] px-3 py-2 text-xs font-medium text-[#F3EFEA] transition-colors hover:border-[#D97706]/50 disabled:cursor-not-allowed disabled:opacity-40 sm:text-sm"
+            >
+              <span>Tập cũ hơn</span>
+              <ChevronRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+            </button>
+          </div>
+        )}
+
         <a
           href={isSample ? '#' : fallbackWebUrl}
           onClick={handleOpenYouTubeApp}
