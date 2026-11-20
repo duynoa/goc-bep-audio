@@ -1,4 +1,3 @@
-export const PLACEHOLDER_CHANNEL_ID = 'UCkwzh-O_x8t5_UO-Zf_bGmA';
 export const REVALIDATE_SECONDS = 1800;
 
 export const FALLBACK_COVER_IMAGES = [
@@ -9,9 +8,7 @@ export const FALLBACK_COVER_IMAGES = [
 export const BRAND_EMBLEM_URL = '/src/assets/images/goc_bep_emblem.png';
 
 export function isPlaceholderChannelId(channelId?: string | null): boolean {
-  if (!channelId) return true;
-  const trimmed = channelId.trim();
-  return !trimmed || trimmed === PLACEHOLDER_CHANNEL_ID;
+  return !channelId?.trim();
 }
 
 export function buildYouTubeRssUrl(channelId: string): string {

@@ -76,7 +76,7 @@ export function EpisodeListSection({
       <SearchInput
         value={searchQuery}
         onChange={onSearchChange}
-        placeholder="Tìm tên truyện hoặc số tập (vd: Tập 12)..."
+        placeholder="Tìm tên truyện ..."
       />
 
       {isLoading ? (

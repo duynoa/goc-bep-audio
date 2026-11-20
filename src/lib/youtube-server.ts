@@ -2,7 +2,6 @@ import Parser from 'rss-parser';
 import type { Episode, YouTubeFeedResponse } from '../features/episodes/types.ts';
 import {
   FALLBACK_COVER_IMAGES,
-  PLACEHOLDER_CHANNEL_ID,
   REVALIDATE_SECONDS,
   buildYouTubeRssUrl,
   cleanEpisodeTitle,
@@ -157,8 +156,8 @@ function extractThumbnailUrl(item: YouTubeCustomItem & Parser.Item, videoId: str
  */
 export async function resolveChannelId(input: string): Promise<string> {
   const trimmed = input.trim();
-  if (!trimmed || trimmed === PLACEHOLDER_CHANNEL_ID) {
-    return PLACEHOLDER_CHANNEL_ID;
+  if (!trimmed) {
+    return '';
   }
 
   // Đã là Channel ID chuẩn (UC + 22 ký tự)
@@ -215,11 +214,11 @@ export async function fetchYouTubeEpisodes(
   const rawChannelId =
     requestedChannelId?.trim() ||
     process.env.YOUTUBE_CHANNEL_ID?.trim() ||
-    PLACEHOLDER_CHANNEL_ID;
+    '';
 
   if (isPlaceholderChannelId(rawChannelId)) {
     return {
-      channelId: PLACEHOLDER_CHANNEL_ID,
+      channelId: '',
       channelTitle: 'Góc Bếp Audio',
       channelUrl: 'https://www.youtube.com',
       subscribeUrl: 'https://www.youtube.com',

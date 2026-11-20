@@ -10,13 +10,11 @@ import type { Episode } from '../types';
 interface EpisodePlayerProps {
   episode: Episode;
   onClose: () => void;
-  onOpenSetup: () => void;
 }
 
 export function EpisodePlayer({
   episode,
   onClose,
-  onOpenSetup,
 }: EpisodePlayerProps) {
   const isSample = Boolean(episode.isSample);
   const embedSrc = isSample ? '' : getEmbedUrl(episode.videoId, true);
@@ -25,7 +23,6 @@ export function EpisodePlayer({
   const handleOpenYouTubeApp = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     if (isSample) {
-      onOpenSetup();
       return;
     }
     openVideoInYouTubeApp(episode.videoId);
@@ -80,15 +77,8 @@ export function EpisodePlayer({
             />
             <div className="relative z-10 max-w-lg space-y-3">
               <p className="text-sm leading-relaxed text-[#F3EFEA]">
-                Đây là tập minh họa vì biến <code className="text-[#F59E0B]">YOUTUBE_CHANNEL_ID</code> chưa gắn ID kênh thật. Hãy nhập Channel ID YouTube của bạn để phát audio thật.
+                Đây là tập minh họa vì biến <code className="text-[#F59E0B]">YOUTUBE_CHANNEL_ID</code> trong <code className="text-[#F59E0B]">.env</code> chưa được cấu hình.
               </p>
-              <button
-                type="button"
-                onClick={onOpenSetup}
-                className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-[#D97706] px-4 py-2 text-sm font-semibold text-[#121110] transition-colors hover:bg-[#F59E0B]"
-              >
-                Kết nối Channel ID ngay
-              </button>
             </div>
           </div>
         ) : (
@@ -106,7 +96,7 @@ export function EpisodePlayer({
       {/* Nút bắt buộc ngay dưới trình phát: Mở bằng ứng dụng YouTube */}
       <div className="mt-4 space-y-2.5">
         <a
-          href={isSample ? '#setup-channel' : fallbackWebUrl}
+          href={isSample ? '#' : fallbackWebUrl}
           onClick={handleOpenYouTubeApp}
           className="flex min-h-[48px] w-full items-center justify-center gap-2.5 whitespace-nowrap rounded-2xl border border-[#D97706]/50 bg-[#D97706]/15 px-5 py-3 text-[15px] font-semibold text-[#F59E0B] transition-colors duration-150 hover:bg-[#D97706] hover:text-[#121110] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D97706]"
         >

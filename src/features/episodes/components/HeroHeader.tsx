@@ -8,15 +8,11 @@ import {
 interface HeroHeaderProps {
   channelId: string;
   channelTitle: string;
-  isConfigured: boolean;
-  onOpenSetup: () => void;
 }
 
 export function HeroHeader({
   channelId,
   channelTitle,
-  isConfigured,
-  onOpenSetup,
 }: HeroHeaderProps) {
   const subscribeHref = getChannelWebUrl(channelId);
   const displayName =
@@ -33,12 +29,12 @@ export function HeroHeader({
     <header className="border-b border-[#2C2824] bg-[#121110]">
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-5 sm:px-6 md:flex-row md:items-center md:justify-between md:py-6 lg:px-8">
         <div className="flex items-center gap-3.5 sm:gap-4">
-          <div className="h-12 w-12 shrink-0 overflow-hidden rounded-2xl border border-[#2C2824] bg-[#1C1A18] sm:h-14 sm:w-14">
+          <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full border border-[#2C2824] bg-[#1C1A18] sm:h-14 sm:w-14">
             <img
               src={BRAND_EMBLEM_URL}
               alt="Biểu tượng Góc Bếp Audio"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover rounded-full"
             />
           </div>
           <div className="min-w-0">
@@ -61,16 +57,6 @@ export function HeroHeader({
             <span>Đăng ký kênh YouTube</span>
             <ExternalLink className="h-3.5 w-3.5 shrink-0 opacity-75" aria-hidden="true" />
           </a>
-
-          {!isConfigured && (
-            <button
-              type="button"
-              onClick={onOpenSetup}
-              className="inline-flex min-h-[44px] items-center justify-center whitespace-nowrap rounded-xl border border-[#2C2824] bg-[#1C1A18] px-4 py-2.5 text-sm font-medium text-[#F3EFEA] transition-colors duration-150 hover:border-[#D97706]/60 hover:bg-[#25221F] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D97706]"
-            >
-              Gắn Channel ID
-            </button>
-          )}
         </div>
       </div>
     </header>
