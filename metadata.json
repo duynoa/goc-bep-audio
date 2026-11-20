@@ -1,0 +1,6 @@
+{
+  "name": "Góc Bếp Audio",
+  "description": "Web nghe truyện audio đêm khuya tối giản, tối ưu cho điện thoại — nghe trọn bộ từ YouTube.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

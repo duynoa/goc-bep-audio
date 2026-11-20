@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Lora", Georgia, Cambria, "Times New Roman", serif;
+  --font-sans: "Be Vietnam Pro", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --color-canvas: #121110;
+  --color-surface: #1C1A18;
+  --color-surface-hover: #25221F;
+  --color-border-warm: #2C2824;
+  --color-ink: #F3EFEA;
+  --color-ink-muted: #A8A095;
+  --color-amber-warm: #D97706;
+  --color-amber-glow: #F59E0B;
+}
+
+@layer base {
+  html {
+    background-color: #121110;
+    color: #F3EFEA;
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: #121110;
+    color: #F3EFEA;
+    letter-spacing: 0.01em;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
